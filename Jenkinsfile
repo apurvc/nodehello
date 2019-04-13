@@ -16,7 +16,7 @@ labels:
   component: ci
 spec:
   # Use service account that can deploy to all namespaces
-  serviceAccountName: lbg-p-ob-e-playpen
+  serviceAccountName: jenkins-cd
   containers:
   - name: gcloud
     image: gcr.io/cloud-builders/gcloud

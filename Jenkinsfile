@@ -1,5 +1,5 @@
 def project = 'lbg-p-ob-e-playpen'
-def  APP_NAME = 'nodehello'
+def  appName = 'nodehello'
 def  feSvcName = "nodehello-svc"
 def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 

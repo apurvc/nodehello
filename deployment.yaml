@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nodehello
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nodehello
+    spec:
+      containers:
+      - name: nodehello
+        image: nodehello:v1
+        ports:
+        - containerPort: 8000
+---
+kind: Service
+metadata:
+  name: nodehello-svc
+  labels:
+    app: nodehello
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+
+  selector:
+    app: nodehello        

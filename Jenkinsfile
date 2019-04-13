@@ -18,6 +18,11 @@ spec:
   # Use service account that can deploy to all namespaces
   serviceAccountName: jenkins-cd
   containers:
+  - name: docker
+    image: gcr.io/cloud-builders/docker
+    command:
+    - cat
+    tty: true  
   - name: gcloud
     image: gcr.io/cloud-builders/gcloud
     command:
@@ -37,10 +42,12 @@ spec:
       //  branch 'master'
       //}
       steps {
+        container('docker') {
         //git 'https://github.com/apurvc/nodehello.git'
 
         sh("docker build -t ${imageTag} .")
         sh("gcloud docker -- push ${imageTag}")
+        }
       }
     }
 /*    stage('Deploy Canary') {

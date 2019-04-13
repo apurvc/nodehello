@@ -78,6 +78,7 @@ spec:
       } 
       steps {
         container('kubectl') {
+          echo 'Image tag is ${imageTag} branch is ${env.BRANCH_NAME} and ${env.BUILD_NUMBER}'
           // Create namespace if it doesn't exist
           sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f deployment.yaml")

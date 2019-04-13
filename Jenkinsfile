@@ -33,14 +33,14 @@ spec:
   }
   stages {
     stage('Build Release') {
-      when {
-        branch 'master'
-      }
+      //when {
+      //  branch 'master'
+      //}
       steps {
         //git 'https://github.com/apurvc/nodehello.git'
 
-        sh "docker build -t hello-node:v1"
-        sh "docker tag hello-node:v1 $imageTag"
+        sh("docker build -t ${imageTag} .")
+        sh("gcloud docker -- push ${imageTag}")
       }
     }
 /*    stage('Deploy Canary') {
@@ -77,14 +77,15 @@ spec:
         not { branch 'canary' }
       } 
       steps {
-        container('kubectl') {
+        
           echo 'Image tag is ${imageTag} branch is ${env.BRANCH_NAME} and ${env.BUILD_NUMBER}'
+
           // Create namespace if it doesn't exist
           sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
           sh("kubectl --namespace=${env.BRANCH_NAME} apply -f deployment.yaml")
           echo 'To access your environment run `kubectl proxy`'
           sh("echo http://`kubectl --namespace=${env.BRANCH_NAME} get service/${feSvcName} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'` > ${feSvcName}")
-        }
+        
       }     
     }
   }

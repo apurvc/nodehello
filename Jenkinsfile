@@ -6,7 +6,7 @@ def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUM
 pipeline {
   agent {
     kubernetes {
-      label 'sample-app'
+      label 'default'
       defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
@@ -42,6 +42,7 @@ spec:
       //  branch 'master'
       //}
       steps {
+        echo 'Image tag is ${imageTag} branch is ${env.BRANCH_NAME} and ${env.BUILD_NUMBER}'
         container('docker') {
         //git 'https://github.com/apurvc/nodehello.git'
 
